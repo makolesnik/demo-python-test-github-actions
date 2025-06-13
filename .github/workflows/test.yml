@@ -2,9 +2,9 @@ name: Run Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
@@ -17,7 +17,7 @@ jobs:
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: 📦 Install dependencies
         run: |
@@ -33,3 +33,11 @@ jobs:
         with:
           name: junit-report
           path: reports/junit.xml
+
+      - name: 📋 Publish Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Pytest Report
+          path: reports/junit.xml
+          reporter: java-junit
